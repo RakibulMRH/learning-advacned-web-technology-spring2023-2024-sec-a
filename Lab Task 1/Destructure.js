@@ -194,9 +194,3 @@ let obj9 = {
 let { name: myName4, age: myAge4, friends: [friend1, friend2] } = obj9;
 console.log(myName4); //Output: John
 console.log(myAge4); //Output: 23
-
-
-
-
-
-
