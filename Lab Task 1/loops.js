@@ -26,7 +26,7 @@ for (let index in x) {
 
 //for of loop
 for (let value of x) {
-    console.log(value);
+    //console.log(value);
 }
 
 //forEach loop
@@ -37,27 +37,40 @@ x.forEach(function(value, index) {
 //map loop
 //The map() method creates a new array with the results of calling a function for every array element.
 let y = x.map(function(value, index) {
-    return value;
+   // return value;
 });
 
 
 //filter loop
 //The filter() method creates a new array with array elements that passes a test.
 let z = x.filter(function(value, index) {
-    return value;
+    //return value;
 });
 
 //reduce loop
 //The reduce() method reduces the array to a single value.
 let sum = x.reduce(function(accumulator, currentValue) {
-    return accumulator + currentValue;
+    //return accumulator + currentValue;
 });
-console.log(sum);
-console.log(x);
+// console.log(sum);
+// console.log(x);
 
 //reduceRight loop
 //The reduceRight() method reduces the array to a single value.
 let sum2 = x.reduceRight(function(accumulator, currentValue) {
-    return accumulator + currentValue;
+    //return accumulator + currentValue;
 });
-console.log(sum2);
+//console.log(sum2);
+
+//every loop
+//The every() method checks if all elements in an array pass a test (provided as a function).
+let allOver4 = x.every(function(value, index) {
+    return value > 4;
+});
+
+//some loop
+//The some() method checks if any of the elements in an array pass a test (provided as a function).
+let someOver4 = x.some(function(value, index) {
+    return value > 4;
+});
+//console.log(someOver4);
