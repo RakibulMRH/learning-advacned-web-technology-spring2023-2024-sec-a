@@ -74,3 +74,70 @@ let someOver4 = x.some(function(value, index) {
     return value > 4;
 });
 //console.log(someOver4);
+
+//find loop
+//The find() method returns the value of the first element in an array that pass a test (provided as a function).
+let firstOver4 = x.find(function(value, index) {
+    return value > 4;
+});
+
+//findIndex loop
+//The findIndex() method returns the index of the first element in an array that pass a test (provided as a function).
+let firstOver4Index = x.findIndex(function(value, index) {
+    return value > 4;
+});
+
+//indexOf loop
+//The indexOf() method searches the array for the specified item, and returns its position.
+let index = x.indexOf('c');
+//console.log(index);
+
+//lastIndexOf loop
+//The lastIndexOf() method searches the array for the specified item, and returns its position.
+let lastIndex = x.lastIndexOf('c');
+//console.log(lastIndex);
+
+//includes loop
+//The includes() method determines whether an array contains a specified element.
+let includes = x.includes('c');
+
+//Array.from loop
+//The Array.from() method returns an Array object from any object with a length property or an iterable object.
+let array = Array.from('ABCDEFG');
+//console.log(array);
+
+//Array.isArray loop
+//The Array.isArray() method checks whether an object is an array.
+let isArray = Array.isArray(x);
+//console.log(isArray);
+
+//Array.of loop
+//The Array.of() method creates an array from its arguments.
+
+let arr = Array.of(1, 2, 3, 4, 5);
+//console.log(arr);
+
+//concat loop
+//The concat() method is used to join two or more arrays.
+let arr2 = arr.concat(x);
+//console.log(arr2);
+
+//copyWithin loop
+//The copyWithin() method copies array elements to another position in the array, overwriting the existing values.
+let arr3 = arr.copyWithin(0, 3);
+//console.log(arr3);
+
+//entries loop
+//The entries() method returns a new Array Iterator object that contains the key/value pairs for each index in the array.   
+let iterator = arr.entries();
+console.log("Entries: ");
+console.log(iterator.next().value);//
+console.log(iterator.next().value);//
+console.log(iterator.next().value);//
+console.log(iterator.next().value);//
+console.log(iterator.next().value);// not undefined
+console.log(iterator.next().value);// undefined
+console.log(iterator.next().value);// undefined
+console.log(iterator.next().value);// undefined
+//undefined because the array has only 5 elements
+//
