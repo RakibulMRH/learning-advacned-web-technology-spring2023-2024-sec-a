@@ -43,16 +43,6 @@ export let person11 = {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
 //33. export Operator
 export let name = "John";
 export let age = 24;
