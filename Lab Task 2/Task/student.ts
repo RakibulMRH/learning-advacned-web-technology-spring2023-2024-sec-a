@@ -1,18 +1,19 @@
 //student that can enroll in course
+import { Course } from './course';
 
-export class student {
-    private _name: string;
-    private _email: string;
-    private _course: string; // Add this line
+export class Student {
+    private name: string;
+    private studentId: number;
+    private coursesEnrolled: Course[];
 
-    constructor(name, email) {
-        this._name = name;
-        this._email = email;
+    constructor(name: string, id: number) {
+        this.name = name;
+        this.studentId = id;
+        this.coursesEnrolled = [];
     }
-    enrollCourse(course) {
-        this._course = course;
-    }
-    get course() {
-        return this._course;
+
+    enroll(course: Course): void {
+        this.coursesEnrolled.push(course);
+        console.log(`${this.name} enrolled in ${course.getCourseDetails()}`);
     }
 }
