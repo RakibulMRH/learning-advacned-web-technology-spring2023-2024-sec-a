@@ -1,0 +1,25 @@
+1. Register a new user
+POST http://localhost:3000/auth/register
+{
+  "email": "joseriosn145@gmail.com",
+  "password": "pass"
+}
+
+2.Login
+Make a POST request to http://localhost:3000/auth/login with the following request body:
+{
+  "email": "joseriosn145@gmail.com",
+  "password": "pass"
+}
+
+3.Forgot Password
+Make a POST request to http://localhost:3000/auth/forgot-password with the following request body:
+{
+  "email": "joseriosn145@gmail.com"
+}
+4. Reset Password
+After receiving the reset password email, you'll find a link that contains the reset token. Copy the token from the link and make a POST request to http://localhost:3000/auth/reset-password with the following request body:
+{
+  "token": "your_reset_token",
+  "newPassword": "your_new_password"
+}

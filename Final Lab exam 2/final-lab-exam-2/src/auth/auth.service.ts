@@ -4,6 +4,8 @@ import * as bcrypt from 'bcrypt';
 import { NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { BadRequestException } from '@nestjs/common';
+import { sendResetPasswordEmail } from '../utils/email.util'; // Import the sendResetPasswordEmail function from the appropriate module
+import { generateResetToken } from '../utils/email.util'; // Import the generateResetToken function from the appropriate module
 
 @Injectable()
 export class AuthService {
@@ -25,22 +27,19 @@ export class AuthService {
   }
   async forgotPassword(email: string) {
     const user = await this.usersService.findByEmail(email);
-    if (!user) {
-        throw new NotFoundException('User not found');
+  
+    try {
+      const resetToken = generateResetToken();
+      await sendResetPasswordEmail(email, resetToken);
+      // Update user's reset token in the database
+      await this.usersService.updateResetPasswordToken(user.id, resetToken, new Date(Date.now() + 3600000));
+      return { message: 'Reset password link has been sent to your email' };
+    } catch (error) {
+      return { message: 'Failed to send reset password email', error };
     }
-
-    const resetToken = randomBytes(20).toString('hex');
-    const resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour
-
-    await this.usersService.updateResetPasswordToken(user.id, resetToken, resetPasswordExpires);
-
-    // Send email with reset token and instructions
-    // ...
-
-    return { message: 'Reset password link has been sent to your email' };
   }
 
-async resetPassword(token: string, newPassword: string) {
+  async resetPassword(token: string, newPassword: string) {
     const user = await this.usersService.findByResetPasswordToken(token);
     if (!user) {
         throw new NotFoundException('Invalid reset token');
@@ -55,5 +54,6 @@ async resetPassword(token: string, newPassword: string) {
 
     return { message: 'Password reset successful' };
 }
+
   // Implement other authentication methods like reset password, etc.
 }
