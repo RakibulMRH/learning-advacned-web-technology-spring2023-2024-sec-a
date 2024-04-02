@@ -20,6 +20,6 @@ Make a POST request to http://localhost:3000/auth/forgot-password with the follo
 4. Reset Password
 After receiving the reset password email, you'll find a link that contains the reset token. Copy the token from the link and make a POST request to http://localhost:3000/auth/reset-password with the following request body:
 {
-  "token": "your_reset_token",
+  "token": "hb42948136d5aa3d984dfee41f7c56ab85f98f388d0d3131e080fc5d4fa5e779f",
   "newPassword": "your_new_password"
 }
