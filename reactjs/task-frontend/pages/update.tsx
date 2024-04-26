@@ -1,4 +1,5 @@
 import EmployerForm from '../components/EmployerForm';
+import {Employer}  from '../components/EmployerForm';
 
 const UpdatePage = () => {
   const handleUpdate = (employer: Employer) => {

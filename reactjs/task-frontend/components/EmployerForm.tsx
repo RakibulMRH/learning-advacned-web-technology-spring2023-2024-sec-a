@@ -4,7 +4,7 @@ interface EmployerFormProps {
   onSubmit: (employer: Employer) => void;
 }
 
-interface Employer {
+export interface Employer {
   employerName: string;
   companyName: string;
   contactNo: string;
