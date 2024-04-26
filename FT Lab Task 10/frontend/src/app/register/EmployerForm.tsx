@@ -25,7 +25,7 @@ const EmployerForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission here
+    // backend API call to save the employer data
     console.log(formData);
   };
 
