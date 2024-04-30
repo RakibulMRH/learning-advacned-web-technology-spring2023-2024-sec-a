@@ -10,7 +10,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(
     session({
-      secret: 'secretKey', // Replace with your own secret key
+      secret: 'secretKey',
       resave: false,
       saveUninitialized: false,
     }),
@@ -18,4 +18,5 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
+
 bootstrap();
