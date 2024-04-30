@@ -3,10 +3,14 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { UsersService } from '../users/users.service'; // Import the UsersService
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,  
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -22,7 +26,18 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() authCredentialsDto: AuthCredentialsDto) {
-    // Implement registration logic here
+    const existingUser = await this.usersService.findOne(authCredentialsDto.email);
+    if (existingUser) { 
+      // Check if the user already exists
+      return { message: 'User already exists' };
+    }
+
+    const user = await this.usersService.create({
+      name: authCredentialsDto.name, // Add the name property
+      email: authCredentialsDto.email,
+      password: authCredentialsDto.password,
+    });
+    return { message: 'User created successfully', user };
   }
 
   @Get('logout')
