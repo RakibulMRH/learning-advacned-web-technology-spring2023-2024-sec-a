@@ -6,17 +6,18 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { SessionSerializer } from './utils/session.serializer';
 
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({ session: true }),
     JwtModule.register({
-      secret: 'secretKey-34e-asd', // Replace with your JWT secret key
+      secret: 'secretKey', // Replace with your JWT secret key
       signOptions: { expiresIn: '3600s' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, SessionSerializer],
   controllers: [AuthController],
 })
 export class AuthModule {}

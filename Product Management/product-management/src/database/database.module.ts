@@ -15,7 +15,7 @@ import { CartItem } from '../cart/entities/cartItem.entity';
         port: 5432,
         username: 'postgres',
         password: 'mrh',
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        entities: [User, Product, Cart, CartItem],
         synchronize: true, // Don't use this in production
       }),
     ],
