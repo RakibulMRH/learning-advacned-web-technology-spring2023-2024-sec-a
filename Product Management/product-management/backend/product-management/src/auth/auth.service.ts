@@ -61,6 +61,11 @@ export class AuthService {
     this.logger.log(`Access Token: ${accessToken}`);
     return {
       access_token: accessToken,
+      user: {
+        id: foundUser.id,
+        email: foundUser.email,
+        role: foundUser.role,
+      },
     };
   }
   async generateResetPasswordToken(email: string): Promise<string> {

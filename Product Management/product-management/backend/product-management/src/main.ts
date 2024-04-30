@@ -8,7 +8,17 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  app.use(cookieParser());
+  app.use(
+    session({
+      secret: 'secretKey', 
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(3001);
 }
-bootstrap();  
+bootstrap();   
+

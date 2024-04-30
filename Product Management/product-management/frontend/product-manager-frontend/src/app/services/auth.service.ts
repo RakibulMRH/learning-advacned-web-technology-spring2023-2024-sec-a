@@ -2,13 +2,15 @@ import { User } from '../types/user.types';
 
 export const authService = {
   isAuthenticated: () => {
-    // Check if the user is authenticated (e.g., by checking localStorage or cookies)
-    const token = localStorage.getItem('token');
+    let token;
+    if (typeof window !== 'undefined') {
+      token = window.localStorage.getItem('token');
+    }
     return !!token;
   },
 
-  login: async (credentials: { email: string; password: string }) => {
-    // Send a login request to the backend and store the token
+login: async (credentials: { email: string; password: string }): Promise<{ access_token: string; user: { id: number; email: string; role: string; } }> => {
+  try {
     const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: {
@@ -17,34 +19,44 @@ export const authService = {
       body: JSON.stringify(credentials),
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem('token', data.token);
-    } else {
-      throw new Error(data.message);
-    }
-  },
-
-  register: async (user: { email: string; password: string; name: string }) => {
-    // Send a registration request to the backend
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    });
-
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.message);
+      throw new Error('Login failed');
+    }
+
+    const data = await response.json();
+
+    // Store the access_token in local storage
+    localStorage.setItem('token', data.access_token);
+
+    // Return the access_token and user data
+    return { access_token: data.access_token, user: data.user };
+  } catch (error) {
+    console.error('Login error:', error);
+    throw error;
+  }
+},
+  register: async (user: { email: string; password: string; name: string }) => {
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      const data = await response.json();
+      console.log('Register response:', data);
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      console.error('Register error:', error);
     }
   },
 
   logout: async () => {
-    // Remove the token from localStorage or clear cookies
     localStorage.removeItem('token');
   },
 
@@ -56,18 +68,24 @@ export const authService = {
       return null;
     }
 
-    const response = await fetch('/api/auth/me', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      return data.user;
-    } else {
-      throw new Error(data.message);
-    }
-  },
-};
+    try {
+        const response = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+  
+        const data = await response.json();
+        console.log('Get user response:', data);
+  
+        if (response.ok) {
+          return data.user;
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        console.error('Get user error:', error);
+      }
+        return null;
+    },
+  };
