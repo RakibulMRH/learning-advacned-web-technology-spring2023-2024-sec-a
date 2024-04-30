@@ -1,19 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsOptional, IsNumber, IsString } from 'class-validator';
 
-@Entity()
-export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class UpdateProductDto {
+  @IsString()
+  @IsOptional()
+  name?: string;
 
-  @Column()
-  name: string;
+  @IsString()
+  @IsOptional()
+  description?: string;
 
-  @Column()
-  description: string;
+  @IsNumber()
+  @IsOptional()
+  price?: number;
 
-  @Column()
-  price: number;
-
-  @Column()
-  stock: number;
+  @IsNumber()
+  @IsOptional()
+  stock?: number;
 }
