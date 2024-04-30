@@ -4,7 +4,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { UsersService } from '../users/users.service';  
-
+import { AuthLoginDto } from './dto/auth-login.dto';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -13,10 +13,11 @@ export class AuthController {
   ) {}
 
  // @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return req.user;
-  }
+  //@UseGuards(AuthGuard('local'))
+@Post('login')
+async login(@Body() authLoginDto: AuthLoginDto) {
+  return this.authService.login(authLoginDto);
+}
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
