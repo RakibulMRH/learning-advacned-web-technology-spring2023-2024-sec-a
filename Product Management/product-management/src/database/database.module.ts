@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import config from '../../ormconfig';
+import { User } from '../users/entities/user.entity';
+import { Product } from '../products/entities/product.entity';
+import { Cart } from '../cart/entities/cart.entity';
+import { CartItem } from '../cart/entities/cartItem.entity';
+
+@Module({
+    imports: [
+      TypeOrmModule.forRoot({
+        type: 'postgres',
+        database: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'mrh',
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        synchronize: true, // Don't use this in production
+      }),
+    ],
+  })
+  export class DatabaseModule {}

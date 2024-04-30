@@ -1,0 +1,75 @@
+/* styles/login.module.css */
+.container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.header {
+    padding: 2rem;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 25%;
+}
+
+.logo {
+    height: 50px;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    width: 50%;
+}
+
+.graphicSide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    width: 25%;
+}
+
+/* ... rest of the styles ... */
+  .loginCard {
+    max-width: 400px;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add more styles for your form elements, buttons, and layout.
+     You will need to adjust these styles to match the visual design you've provided. */
+  
+  .buttonEmail, .buttonMobile {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+  .buttonEmail:hover, .buttonMobile:hover {
+    background-color: #219653;
+  }
+  
+  .divider {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .loginFooter {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  /* Add responsive styles and other UI elements as needed. */
