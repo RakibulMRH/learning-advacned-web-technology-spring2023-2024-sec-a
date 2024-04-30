@@ -10,7 +10,7 @@ import { CartItem } from '../cart/entities/cartItem.entity';
     imports: [
       TypeOrmModule.forRoot({
         type: 'postgres',
-        database: 'postgres',
+        database: 'awt',
         host: 'localhost',
         port: 5432,
         username: 'postgres',

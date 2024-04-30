@@ -31,11 +31,12 @@ export class AuthController {
       // Check if the user already exists
       return { message: 'User already exists' };
     }
-
+  
     const user = await this.usersService.create({
       name: authCredentialsDto.name, // Add the name property
       email: authCredentialsDto.email,
       password: authCredentialsDto.password,
+      role: 'user', // Add a role property
     });
     return { message: 'User created successfully', user };
   }
