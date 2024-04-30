@@ -42,17 +42,19 @@ export class AuthService {
       this.logger.warn(`User not found: ${user.email}`);
       throw new UnauthorizedException('Invalid credentials');
     }
-
+  
     const passwordMatch = await bcrypt.compare(user.password, foundUser.password);
     if (!passwordMatch) {
       this.logger.warn(`Password mismatch for user: ${user.email}`);
       throw new UnauthorizedException('Invalid credentials');
     }
-
+  
     this.logger.log(`User authenticated: ${user.email}`);
     const payload = { email: foundUser.email, role: foundUser.role, sub: foundUser.id };
+    const accessToken = this.jwtService.sign(payload);
+    this.logger.log(`Access Token: ${accessToken}`);
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: accessToken,
     };
   }
 }
