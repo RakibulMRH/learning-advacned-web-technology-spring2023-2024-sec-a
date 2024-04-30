@@ -13,7 +13,7 @@ import { SessionSerializer } from './utils/session.serializer';
     UsersModule,
     PassportModule.register({ session: true }),
     JwtModule.register({
-      secret: 'secretKey', // Replace with your JWT secret key
+      secret: 'mrhflex',  
       signOptions: { expiresIn: '3600s' },
     }),
   ],
