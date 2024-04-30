@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'; 
 
 export class CreateProductDto {
   @IsString()
@@ -11,6 +12,7 @@ export class CreateProductDto {
 
   @IsNumber()
   @IsNotEmpty()
+  @Column('decimal')
   price: number;
 
   @IsNumber()

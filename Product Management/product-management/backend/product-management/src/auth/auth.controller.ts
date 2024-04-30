@@ -7,6 +7,8 @@ import { UsersService } from '../users/users.service';
 import { AuthLoginDto } from './dto/auth-login.dto'; 
 import { TokenBlacklistService } from './utils/token-blacklist.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ForgotPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -58,5 +60,16 @@ logout(@Request() req) {
 
   this.tokenBlacklistService.blacklistToken(token);
   // Invalidate the session or do other cleanup
-}
+  return { message: 'Logout successful' };
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword);
+  }
 }

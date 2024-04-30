@@ -5,6 +5,10 @@ import { User } from '../users/entities/user.entity';
 import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthLoginDto } from './dto/auth-login.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { NotFoundException } from '@nestjs/common';
+import { sendResetPasswordEmail } from '../auth/utils/email.util';
+import { generateResetToken } from '../auth/utils/email.util';
 
 @Injectable()
 export class AuthService {
@@ -58,5 +62,54 @@ export class AuthService {
     return {
       access_token: accessToken,
     };
+  }
+  async generateResetPasswordToken(email: string): Promise<string> {
+  const user = await this.usersService.findByEmail(email);
+  if (!user) {
+    throw new NotFoundException('User not found');
+  }
+
+  // Generate a reset password token
+  const resetPasswordToken = uuidv4();
+
+  // Save the reset password token in the user's record
+  user.resetPasswordToken = resetPasswordToken;
+  await this.usersService.update(user.id, user);
+
+  // Send the reset password token to the user's email
+  // ...
+
+  return resetPasswordToken;
+}
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+  const user = await this.usersService.findByResetPasswordToken(token);
+  if (!user) {
+    throw new UnauthorizedException('Invalid token');
+  }
+
+  // Hash the new password
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  // Update the user's password and clear the reset password token
+  user.password = hashedPassword;
+  user.resetPasswordToken = null;
+  await this.usersService.update(user.id, user);
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.usersService.findByEmail(email);
+
+    try 
+    {
+      const resetToken = generateResetToken();
+      await sendResetPasswordEmail(email, resetToken);
+      await this.usersService.updateResetPasswordToken(user.id, resetToken, new Date(Date.now() + 36000));
+      return { message: 'Reset password link has been sent to your email' };
+    } 
+    catch (error) 
+    {
+      return { message: 'Failed to send reset password email', error };
+    }
   }
 }

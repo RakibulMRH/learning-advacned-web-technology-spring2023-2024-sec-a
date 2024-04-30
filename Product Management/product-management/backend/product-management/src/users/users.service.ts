@@ -28,10 +28,22 @@ export class UsersService {
   findOne(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email } });
   }
-
+  async updateResetPasswordToken(userId: number, resetToken: string, resetPasswordExpires: Date) {
+    await this.usersRepository.update(userId, { resetPasswordToken: resetToken, resetPasswordExpires });
+  }
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
     Object.assign(user, updateUserDto);
     return this.usersRepository.save(user);
+  }   
+  findByResetPasswordToken(token: string): Promise<User> {
+    return this.usersRepository.findOne({ where: { resetPasswordToken: token } });
+  }
+
+  async resetPasswordToken(id: number, token: string): Promise<User> {
+    const user = await this.findById(id);
+    user.resetPasswordToken = token;
+    return this.usersRepository.save(user);
   }
 }
+   

@@ -22,4 +22,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     console.log('Inside JWT AuthGuard canActivate');
     return super.canActivate(context);
   }
+
+  handleRequest(err, user, info, context) {
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    } 
+    context.switchToHttp().getRequest().user = user;
+    return user;
+  }
 }
