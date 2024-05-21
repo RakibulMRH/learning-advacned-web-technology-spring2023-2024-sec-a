@@ -23,10 +23,10 @@ export class AuthService {
     this.logger.log(`Validating user: ${email}`);
     const user = await this.usersService.findOne(email);
     if (user) {
-      this.logger.log(`Found user: ${email}`);
+      //this.logger.log(`Found user: ${email}`);
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
-        this.logger.log(`Password match for user: ${email}`);
+        //his.logger.log(`Password match for user: ${email}`);
         const { password, ...result } = user;
         return result;
       } else {
@@ -42,20 +42,20 @@ export class AuthService {
     if (!user) {
       throw new BadRequestException('User data is not provided');
     }
-    this.logger.log(`Logging in user: ${user.email}`);
+    //this.logger.log(`Logging in user: ${user.email}`);
     const foundUser = await this.usersService.findByEmail(user.email);
     if (!foundUser) {
-      this.logger.warn(`User not found: ${user.email}`);
+     // this.logger.warn(`User not found: ${user.email}`);
       throw new UnauthorizedException('Invalid credentials');
     }
 
     const passwordMatch = await bcrypt.compare(user.password, foundUser.password);
     if (!passwordMatch) {
-      this.logger.warn(`Password mismatch for user: ${user.email}`);
+      //this.logger.warn(`Password mismatch for user: ${user.email}`);
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    this.logger.log(`User authenticated: ${user.email}`);
+   // this.logger.log(`User authenticated: ${user.email}`);
     const payload = { email: foundUser.email, role: foundUser.role, sub: foundUser.id };
     const accessToken = this.jwtService.sign(payload);
     this.logger.log(`Access Token: ${accessToken}`);

@@ -9,9 +9,8 @@ export const authService = {
     return !!token;
   },
 
-login: async (credentials: { email: string; password: string }): Promise<{ access_token: string; user: { id: number; email: string; role: string; } }> => {
-  try {
-    const response = await fetch('/api/auth/login', {
+  login: async (credentials: { email: string; password: string }): Promise<{ access_token: string; user: { id: number; email: string; role: string; } }> => {
+    const response = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,20 +23,14 @@ login: async (credentials: { email: string; password: string }): Promise<{ acces
     }
 
     const data = await response.json();
-
-    // Store the access_token in local storage
     localStorage.setItem('token', data.access_token);
 
-    // Return the access_token and user data
     return { access_token: data.access_token, user: data.user };
-  } catch (error) {
-    console.error('Login error:', error);
-    throw error;
-  }
-},
+  },
+
   register: async (user: { email: string; password: string; name: string }) => {
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch('/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

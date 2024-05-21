@@ -2,8 +2,7 @@ import { Cart, CartItem } from '../types/cart.types';
 
 export const cartService = {
   getCart: async (): Promise<Cart> => {
-    // Send a request to the backend to get the current cart
-    const response = await fetch('/api/cart');
+     const response = await fetch('/api/cart');
     const data = await response.json();
 
     if (response.ok) {
@@ -26,8 +25,7 @@ export const cartService = {
   },
 
   addToCart: async (productId: string, quantity: number): Promise<Cart> => {
-    // Send a request to the backend to add an item to the cart
-    const response = await fetch('/api/cart/add', {
+     const response = await fetch('/api/cart/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

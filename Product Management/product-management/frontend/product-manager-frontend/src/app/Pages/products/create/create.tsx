@@ -1,6 +1,7 @@
+'use client';
 import { useState } from 'react';
-import { productsService } from '../../services/products.service';
-import { useRouter } from 'next/router';
+import { productsService } from '../../../services/products.service';
+import { useRouter } from 'next/navigation';
 
 const CreateProductPage: React.FC = () => {
   const router = useRouter();

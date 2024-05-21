@@ -1,6 +1,7 @@
+'use client';
 import { useState } from 'react';
-import { authService } from '../../services/auth.service';
-import { useRouter } from 'next/router';
+import { authService } from '../../../services/auth.service';
+import { useRouter } from 'next/navigation';
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
@@ -11,7 +12,7 @@ const RegisterPage: React.FC = () => {
   const handleRegister = async () => {
     try {
       await authService.register({ email, password, name });
-      router.push('/auth/login');
+      router.push('./Login');
     } catch (error) {
       console.error(error);
     }
